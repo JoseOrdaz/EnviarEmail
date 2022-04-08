@@ -7,7 +7,8 @@ const formulario = document.querySelector('#enviar-mail');
 const email = document.querySelector('#email');
 const asunto = document.querySelector('#asunto');
 const mensaje = document.querySelector('#mensaje');
-
+//Expresion regular para validar email
+const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 eventListeners();
 
 
@@ -37,8 +38,9 @@ function validarFormulario(e){
 
         //Elimna los errores
         const error = document.querySelector('p.error');
-        error.remove();
-
+        if(error){
+            error.remove();
+        }
         e.target.classList.add('border-green-500');
         e.target.classList.remove('border-red-500');
 
@@ -50,8 +52,7 @@ function validarFormulario(e){
     }
 
     if(e.target.type === 'email'){
-        //Expresion regular para validar email
-        const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+     
         if(er.test(e.target.value)){
             e.target.classList.add('border-green-500');
             e.target.classList.remove('border-red-500');
@@ -63,6 +64,12 @@ function validarFormulario(e){
             mostrarError('El email no es valido');
         }
 
+    }
+
+    if(er.test(email.value) && asunto.value !== '' && mensaje.value !== ''){
+       console.log('Pasas la validacion')
+    } else {
+        console.log('Hay campos para validar')
     }
 }
 
